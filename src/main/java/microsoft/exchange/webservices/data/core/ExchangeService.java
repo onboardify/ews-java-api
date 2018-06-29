@@ -2710,7 +2710,7 @@ public class ExchangeService extends ExchangeServiceBase implements IAutodiscove
    * @param folderId The Id of the folder in which to search for conversations.
    * @throws Exception
    */
-  private Collection<Conversation> findConversation(
+  public Collection<Conversation> findConversation(
       ConversationIndexedItemView view, SearchFilter.IsEqualTo filter,
       FolderId folderId) throws Exception {
     EwsUtilities.validateParam(view, "view");
