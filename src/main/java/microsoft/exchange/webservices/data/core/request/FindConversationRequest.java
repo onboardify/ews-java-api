@@ -44,6 +44,7 @@ public final class FindConversationRequest extends SimpleServiceRequestBase<Find
 
   private ConversationIndexedItemView view;
   private SearchFilter.IsEqualTo searchFilter;
+  private String queryString;
   private FolderIdWrapper folderId;
 
   /**
@@ -91,6 +92,18 @@ public final class FindConversationRequest extends SimpleServiceRequestBase<Find
   public void setFolderId(FolderIdWrapper value) {
     this.folderId = value;
   }
+  
+  /**
+   * Gets or sets Query string
+   * @return 
+   */
+  public String getQueryString() {
+      return this.queryString;
+  }
+  
+  public void setQueryString(String value) {
+      this.queryString = value;
+  }
 
 
   /**
@@ -135,6 +148,11 @@ public final class FindConversationRequest extends SimpleServiceRequestBase<Find
           XmlElementNames.Restriction);
       this.getConversationViewFilter().writeToXml(writer);
       writer.writeEndElement(); // Restriction
+    }
+    
+    if (!(this.queryString == null || this.queryString.isEmpty())) {
+      writer.writeElementValue(XmlNamespace.Messages,
+          XmlElementNames.QueryString, this.queryString);
     }
 
     this.getIndexedItemView().writeOrderByToXml(writer);

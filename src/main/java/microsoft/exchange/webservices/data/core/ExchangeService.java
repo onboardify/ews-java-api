@@ -30,13 +30,11 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 import java.util.EnumSet;
-import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.TimeZone;
 
 import microsoft.exchange.webservices.data.autodiscover.AutodiscoverService;
 import microsoft.exchange.webservices.data.autodiscover.IAutodiscoverRedirectionUrl;
@@ -2705,6 +2703,31 @@ public class ExchangeService extends ExchangeServiceBase implements IAutodiscove
    * Retrieves a collection of all Conversations in the specified Folder.
    *
    * @param view     The view controlling the number of conversations returned.
+   * @param queryString   queryString to filter the results
+   * @param folderId The Id of the folder in which to search for conversations.
+   * @throws Exception
+   */
+  public Collection<Conversation> findConversation(
+      ConversationIndexedItemView view, String queryString,
+      FolderId folderId) throws Exception {
+    EwsUtilities.validateParam(view, "view");
+    EwsUtilities.validateParamAllowNull(queryString, "queryString");
+    EwsUtilities.validateParam(folderId, "folderId");
+    EwsUtilities.validateMethodVersion(this,
+        ExchangeVersion.Exchange2010_SP1, "FindConversation");
+
+    FindConversationRequest request = new FindConversationRequest(this);
+    request.setIndexedItemView(view);
+    request.setQueryString(queryString);
+    request.setFolderId(new FolderIdWrapper(folderId));
+
+    return request.execute().getConversations();
+  }
+  
+  /**
+   * Retrieves a collection of all Conversations in the specified Folder.
+   *
+   * @param view     The view controlling the number of conversations returned.
    * @param filter   The search filter. Only search filter class supported
    *                 SearchFilter.IsEqualTo
    * @param folderId The Id of the folder in which to search for conversations.
@@ -2737,7 +2760,8 @@ public class ExchangeService extends ExchangeServiceBase implements IAutodiscove
   public Collection<Conversation> findConversation(
       ConversationIndexedItemView view, FolderId folderId)
       throws Exception {
-    return this.findConversation(view, null, folderId);
+      SearchFilter.IsEqualTo eqlToFilter = null; 
+    return this.findConversation(view, eqlToFilter, folderId);
   }
 
   /**

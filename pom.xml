@@ -30,7 +30,7 @@
 
     <groupId>com.onboardify.github</groupId>
     <artifactId>com.microsoft.ews-java-api-2.0</artifactId>
-    <version>2</version>
+    <version>3</version>
     
     <name>${bundle.symbolicName} ${wrapped.version} [github]</name>
     <description>Exchange Web Services (EWS) Java API</description>
@@ -81,7 +81,7 @@
         <!-- Eliminates the file encoding warning. Of course, all of your files
         should probably be UTF-8 nowadays. -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <javaLanguage.version>1.6</javaLanguage.version>
+        <javaLanguage.version>1.8</javaLanguage.version>
         <javadoc.doclint.param/>
 
         <!--  Dependencies [BUILD]:  -->
